@@ -1,0 +1,25 @@
+[user]
+	name = rynn zhng
+	email = 73264796+0xzhng@users.noreply.github.com
+
+[core]
+	editor = nvim
+	autocrlf = input
+
+[push]
+	default = simple
+
+[pull]
+	rebase = false
+
+[init]
+	defaultBranch = main
+
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	ci = commit
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	visual = !gitk
