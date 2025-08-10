@@ -16,15 +16,17 @@ if [ -f /sys/class/net/$interface/statistics/rx_bytes ]; then
         time_diff=$((time_now - time_prev))
         
         if [ $time_diff -gt 0 ]; then
-            # Calculate speeds in KB/s
-            rx_speed=$(( (rx_now - rx_prev) / time_diff / 1024 ))
-            tx_speed=$(( (tx_now - tx_prev) / time_diff / 1024 ))
-            echo "${rx_speed}K↓ ${tx_speed}K↑"
+            # Calculate speeds in MB/s (with decimal precision)
+            rx_bytes=$(( rx_now - rx_prev ))
+            tx_bytes=$(( tx_now - tx_prev ))
+            rx_speed=$(echo "scale=1; $rx_bytes / $time_diff / 1048576" | bc 2>/dev/null || echo "0")
+            tx_speed=$(echo "scale=1; $tx_bytes / $time_diff / 1048576" | bc 2>/dev/null || echo "0")
+            echo "${rx_speed}M↓ ${tx_speed}M↑"
         else
-            echo "0K↓ 0K↑"
+            echo "0.0M↓ 0.0M↑"
         fi
     else
-        echo "0K↓ 0K↑"
+        echo "0.0M↓ 0.0M↑"
     fi
     
     # Save current values
