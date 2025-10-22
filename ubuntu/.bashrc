@@ -126,3 +126,4 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH:/snap/bin"
 export PATH="$HOME/.npm-global/bin:$PATH"
+export CODEX_NO_PASTE_DETECT=1
