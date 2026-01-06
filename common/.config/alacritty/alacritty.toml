@@ -2,13 +2,3 @@
 size = 16
 [window]
 opacity = 0.94
-
-[[keyboard.bindings]]
-key = "Tab"
-chars = ""
-
-[[keyboard.bindings]]
-key = "I"
-mods = "Control"
-chars = ""
-
