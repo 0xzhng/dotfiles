@@ -1,16 +1,18 @@
 #!/bin/bash
 set -euo pipefail
 
-MONITOR="eDP-1"
+MONITORS=("eDP-1" "DP-1")
 WALL="$HOME/.config/hypr/bg1.png"
 AUTOCONF="$HOME/.config/hypr/.hyprpaper-autoconfig.conf"
 
 # Generate a minimal hyprpaper config on every run.
-cat <<EOF > "$AUTOCONF"
-preload=$WALL
-wallpaper=$MONITOR,$WALL
-splash=false
-EOF
+{
+    printf 'preload=%s\n' "$WALL"
+    for monitor in "${MONITORS[@]}"; do
+        printf 'wallpaper=%s,%s\n' "$monitor" "$WALL"
+    done
+    printf 'splash=false\n'
+} > "$AUTOCONF"
 
 # Ensure old instances don't hold on to stale state.
 pkill hyprpaper >/dev/null 2>&1 || true
@@ -20,7 +22,14 @@ hyprpaper -c "$AUTOCONF" >/dev/null 2>&1 &
 
 # Ask hyprpaper to apply the wallpaper once it's ready.
 for _ in {1..20}; do
-    if hyprctl hyprpaper wallpaper "$MONITOR,$WALL" >/dev/null 2>&1; then
+    all_applied=true
+    for monitor in "${MONITORS[@]}"; do
+        if ! hyprctl hyprpaper wallpaper "$monitor,$WALL" >/dev/null 2>&1; then
+            all_applied=false
+            break
+        fi
+    done
+    if [[ $all_applied == true ]]; then
         exit 0
     fi
     sleep 0.2

@@ -1,0 +1,45 @@
+###############################################
+# Ghostty on Arch / Hyprland
+# - Transparent background
+# - Rounded edges (client-side decorations)
+# - Animated ghost cursor shader
+###############################################
+confirm-close-surface = false
+
+# Terminal basics
+term = xterm-ghostty
+command = /bin/bash
+
+# Match the JetBrains Mono look already used in Waybar
+font-family = "JetBrainsMono Nerd Font"
+font-size = 13
+font-shaping-break = cursor
+
+# Window feel – rely on Hyprland for rounding, keep padding for legibility
+window-decoration = none
+window-theme = ghostty
+window-padding-x = 18
+window-padding-y = 14
+window-padding-balance = true
+
+# Match Hyprland's requested transparency inside Ghostty
+background = #333
+foreground = #f5f7fb
+background-opacity = 0.94
+background-opacity-cells = false
+background-blur = false
+unfocused-split-opacity = 1
+
+# Cursor setup – keep default block cursor but tint + animate via shader
+cursor-style = block
+cursor-style-blink = true
+cursor-color = cell-foreground
+cursor-text = #05070b
+cursor-click-to-move = true
+
+# Shell integration disabled to avoid close confirmations while tmux runs
+shell-integration = none
+
+# Ghost cursor shader
+custom-shader = ~/.config/ghostty/shaders/cursor_smear.glsl
+custom-shader-animation = always
