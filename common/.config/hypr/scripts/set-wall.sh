@@ -1,9 +1,17 @@
 #!/bin/bash
 set -euo pipefail
 
-MONITORS=("eDP-1" "DP-1")
 WALL="$HOME/.config/hypr/bg1.png"
 AUTOCONF="$HOME/.config/hypr/.hyprpaper-autoconfig.conf"
+
+# Build the monitor list dynamically so every active output gets a wallpaper.
+if ! readarray -t MONITORS < <(hyprctl monitors | awk '/^Monitor / {print $2}'); then
+    MONITORS=()
+fi
+# Fallback for situations where hyprctl isn't available (e.g., run from TTY).
+if [[ ${#MONITORS[@]} -eq 0 ]]; then
+    MONITORS=("eDP-1" "DP-1")
+fi
 
 # Generate a minimal hyprpaper config on every run.
 {
