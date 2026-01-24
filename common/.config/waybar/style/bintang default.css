@@ -5,7 +5,7 @@
 
 
 * {
-	font-family: "JetBrainsMono Nerd Font Propo";
+	font-family: "JetBrainsMono Nerd Font", "JetBrainsMono Nerd Font Propo", "Symbols Nerd Font Mono", "Noto Sans CJK JP", "Noto Sans JP", "Noto Sans", "DejaVu Sans";
 	font-weight: bold;
 	min-height: 0;
 	/* set font-size to 100% if font scaling is set to 1.00 using nwg-look */
@@ -77,8 +77,8 @@ tooltip label{
     border-radius: 9px;
     padding-left: 4px;
     padding-right: 4px;
-    animation: gradient_f 20s ease-in infinite;
-    transition: all 0.5s cubic-bezier(.55,-0.68,.48,1.682);
+    animation: none;
+    transition: none;
 }
 #taskbar button:hover,
 #workspaces button:hover {
@@ -86,8 +86,8 @@ tooltip label{
     border-radius: 20px;
  	padding-left: 2px;
     padding-right: 2px;
-    animation: gradient_f 20s ease-in infinite;
-    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+    animation: none;
+    transition: none;
 }
 
 #taskbar button.active,
@@ -95,8 +95,8 @@ tooltip label{
 	color: @inverse_surface;
     padding-left: 8px;
     padding-right: 8px;
-    animation: gradient_f 20s ease-in infinite;
-    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+    animation: none;
+    transition: none;
 }
 
 #workspaces button.urgent {
@@ -185,6 +185,27 @@ tooltip label{
 @keyframes blink {
 	to {
 		color: #000000;
+	}
+}
+
+@keyframes workspaceFlash {
+	0% {
+		background-color: rgba(255, 71, 87, 0.15);
+		color: #ffffff;
+		box-shadow: 0 0 4px rgba(255, 71, 87, 0.35);
+		opacity: 0.6;
+	}
+	50% {
+		background-color: rgba(255, 71, 87, 0.9);
+		color: #ffffff;
+		box-shadow: 0 0 16px rgba(255, 71, 87, 0.95);
+		opacity: 1;
+	}
+	100% {
+		background-color: rgba(255, 71, 87, 0.15);
+		color: #ffffff;
+		box-shadow: 0 0 4px rgba(255, 71, 87, 0.35);
+		opacity: 0.6;
 	}
 }
 

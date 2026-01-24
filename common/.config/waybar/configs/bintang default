@@ -24,24 +24,24 @@
 "modules-left": [
 	//"idle_inhibitor",
 	//"custom/separator#blank",
-	"clock",
+	"hyprland/workspaces#numbers",
 	"custom/separator#blank",
 	"tray",
 	],
 
 "modules-center": [
-	"hyprland/workspaces#kanji",
+	"clock",
 	],
 
 "modules-right": [
         //"mpris",
         //"custom/separator#dot-line",
-        "group/notify",	
 	"battery",
 	"custom/separator#blank",  
+	"network",
+	"custom/separator#blank",
 	"group/audio",
 	"custom/separator#blank",
 	"custom/power",
 	],
 }
-

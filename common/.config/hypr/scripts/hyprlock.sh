@@ -48,7 +48,15 @@ resolve_wallpaper_path() {
 sync_wallpaper_var() {
     local path
     if path=$(resolve_wallpaper_path); then
-        write_wallpaper_var "$path"
+        mkdir -p "$CONFIG_DIR"
+        # Ensure the lockscreen wallpaper is a real file, not a dangling symlink.
+        if [ -L "$FALLBACK_WALL" ]; then
+            rm -f "$FALLBACK_WALL"
+        fi
+        if [ ! -f "$FALLBACK_WALL" ] || ! cmp -s "$path" "$FALLBACK_WALL" 2>/dev/null; then
+            cp -f -- "$path" "$FALLBACK_WALL"
+        fi
+        write_wallpaper_var "$FALLBACK_WALL"
     fi
 }
 
