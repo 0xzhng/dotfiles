@@ -237,7 +237,6 @@
 		"title<.*reddit.*>": " ",
 
 
-		"title<.*ChatGPT.*>": "󰚩 ",
 		"title<.*deepseek.*>": "󰚩 ",
 		"title<.*qwen.*>": "󰚩 ",
 		"class<subl>": "󰅳 ",
