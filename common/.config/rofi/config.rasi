@@ -7,11 +7,11 @@ configuration{
     location: 0;
     disable-history: false;
     hide-scrollbar: true;
-    display-drun: "   Apps ";
+    display-drun: "";
     display-run: "   Run ";
     display-window: " 󰕰  Window";
     display-Network: " 󰤨  Network";
     sidebar-mode: true;
 }
 
-@theme "gruvbox-dark"
+@theme "~/.config/rofi/gruvbox-material.rasi"
