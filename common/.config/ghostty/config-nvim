@@ -1,14 +1,13 @@
 ###############################################
-# Ghostty on Arch / Hyprland
-# - Transparent background
-# - Rounded edges (client-side decorations)
-# - Animated ghost cursor shader
+# Ghostty profile for Neovim sessions
+# - Matches the main profile visuals
+# - Disables inner padding so Neovim gets full screen space
 ###############################################
 confirm-close-surface = false
 
-# Terminal basics
+# Terminal basics – jump straight into Neovim
 term = xterm-ghostty
-command = /bin/bash
+command = nvim
 
 # Match the JetBrains Mono look already used in Waybar
 font-family = "JetBrainsMono Nerd Font"
@@ -18,10 +17,8 @@ font-shaping-break = cursor
 # Window feel – rely on Hyprland for rounding, let apps draw edge to edge
 window-decoration = none
 window-theme = ghostty
-# Give normal terminals some breathing room (Hyprland stays out of it).
-# Use config-nvim for zero-padding editor sessions.
-window-padding-x = 16
-window-padding-y = 12
+window-padding-x = 0
+window-padding-y = 0
 
 # Ghostty-owned color + transparency
 background = #222
