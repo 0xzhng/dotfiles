@@ -1,0 +1,27 @@
+SUBVOLUME="/"
+FSTYPE="btrfs"
+
+# allow both root and oslen to manage snapshots
+ALLOW_USERS="root oslen"
+ALLOW_GROUPS=""
+SYNC_ACL="yes"
+COMPARE="yes"
+
+# automatic timeline snapshots
+TIMELINE_CREATE="yes"
+TIMELINE_CLEANUP="yes"
+
+# keep only 2 daily snapshots
+TIMELINE_LIMIT_HOURLY="0"
+TIMELINE_LIMIT_DAILY="2"
+TIMELINE_LIMIT_WEEKLY="0"
+TIMELINE_LIMIT_MONTHLY="0"
+TIMELINE_LIMIT_YEARLY="0"
+
+# disable number-based cleanup
+NUMBER_CLEANUP="no"
+
+# space-based cleanup: keep disk under 50% usage and 20% free
+SPACE_LIMIT="0.5"
+FREE_LIMIT="0.2"
+

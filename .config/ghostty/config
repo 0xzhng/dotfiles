@@ -1,0 +1,29 @@
+confirm-close-surface = false
+
+term = xterm-ghostty
+command = /bin/bash
+
+font-family = "JetBrainsMono Nerd Font"
+font-size = 13
+font-shaping-break = cursor
+
+window-decoration = none
+window-theme = ghostty
+window-padding-x = 16
+window-padding-y = 12
+
+background = #222
+background-opacity = 0.67
+background-opacity-cells = false
+background-blur = false
+unfocused-split-opacity = 1
+
+cursor-style = block
+cursor-style-blink = true
+cursor-color = cell-foreground
+cursor-text = #05070b
+cursor-click-to-move = true
+shell-integration = none
+
+custom-shader = ~/.config/ghostty/shaders/cursor_smear.glsl
+custom-shader-animation = always

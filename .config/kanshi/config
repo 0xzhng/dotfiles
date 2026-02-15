@@ -1,0 +1,11 @@
+profile docked {
+    output eDP-1 disable
+    [I]
+    output * enable mode preferred position 0,0 scale 1
+    exec ~/.config/hypr/scripts/hotplug-refresh.sh docked
+}
+
+profile undocked {
+    output eDP-1 enable mode 1920x1080@60 position 0,0 scale 1
+    exec ~/.config/hypr/scripts/hotplug-refresh.sh undocked
+}
