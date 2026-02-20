@@ -4,6 +4,20 @@ profile docked {
     exec ~/.config/hypr/scripts/hotplug-refresh.sh docked
 }
 
+profile dual-right {
+    output DP-1 enable position 0,0 scale 1
+    # Keep this Y offset in sync with profile dual-left.
+    output eDP-1 enable position 2560,180 scale 1
+    exec ~/.config/hypr/scripts/hotplug-refresh.sh dual-right
+}
+
+profile dual-left {
+    output DP-1 enable position 0,0 scale 1
+    # Keep this Y offset in sync with profile dual-right.
+    output eDP-1 enable position -1920,180 scale 1
+    exec ~/.config/hypr/scripts/hotplug-refresh.sh dual-left
+}
+
 profile undocked {
     output eDP-1 enable position 0,0 scale 1
     exec ~/.config/hypr/scripts/hotplug-refresh.sh undocked

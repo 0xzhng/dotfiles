@@ -12,8 +12,8 @@
 	"format": "{icon}",
 	"show-special": false,
 	"on-click": "activate",
-	"on-scroll-up": "hyprctl dispatch workspace e+1",
-	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"on-scroll-up": "hyprctl dispatch focusmonitor DP-1 && hyprctl dispatch focusworkspaceoncurrentmonitor e+1",
+	"on-scroll-down": "hyprctl dispatch focusmonitor DP-1 && hyprctl dispatch focusworkspaceoncurrentmonitor e-1",
     "persistent-workspaces": {
       "*": ["1", "2", "3", "4", "5"]
 	},
@@ -143,14 +143,15 @@
 // numbers styles
 "hyprland/workspaces#numbers": {
 	"active-only": false,
-	"all-outputs": true,
+	"all-outputs": false,
+	"move-to-monitor": true,
+	"ignore-workspaces": ["^11$"],
 	"format": "{icon}",
 	"show-special": false,
-	"on-click": "activate",
-	"on-scroll-up": "hyprctl dispatch workspace e+1",
-	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"on-scroll-up": "hyprctl dispatch focusmonitor DP-1 && hyprctl dispatch focusworkspaceoncurrentmonitor e+1",
+	"on-scroll-down": "hyprctl dispatch focusmonitor DP-1 && hyprctl dispatch focusworkspaceoncurrentmonitor e-1",
     "persistent-workspaces": {
-      "*": ["1", "2", "3", "4", "5"]
+	      "*": ["1", "2", "3", "4", "5"]
 	},
 	"format-icons": {
 		"1": "1",
