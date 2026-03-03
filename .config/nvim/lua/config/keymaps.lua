@@ -14,3 +14,8 @@ map("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>", vim.tbl_extend("keep", { desc = "
 map("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>", vim.tbl_extend("keep", { desc = "Go to lower pane" }, opts))
 map("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>", vim.tbl_extend("keep", { desc = "Go to upper pane" }, opts))
 map("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>", vim.tbl_extend("keep", { desc = "Go to right pane" }, opts))
+
+map("n", "<A-h>", "<cmd>vertical resize -2<cr>", vim.tbl_extend("keep", { desc = "Decrease window width" }, opts))
+map("n", "<A-l>", "<cmd>vertical resize +2<cr>", vim.tbl_extend("keep", { desc = "Increase window width" }, opts))
+map("n", "<A-j>", "<cmd>resize +2<cr>", vim.tbl_extend("keep", { desc = "Increase window height" }, opts))
+map("n", "<A-k>", "<cmd>resize -2<cr>", vim.tbl_extend("keep", { desc = "Decrease window height" }, opts))

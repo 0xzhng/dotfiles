@@ -16,12 +16,20 @@ return {
       return
     end
 
-    local jdtls_path = mason_registry.get_package("jdtls"):get_install_path()
-    local launcher = vim.fn.glob(jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar")
-    if launcher == "" then
-      return
+    local mason_root = vim.fn.expand("$MASON")
+    if mason_root == "" or mason_root == "$MASON" then
+      mason_root = vim.fn.stdpath("data") .. "/mason"
     end
-    launcher = vim.split(launcher, "\n")[1]
+
+    local jdtls_path = mason_root .. "/share/jdtls"
+    local launcher = jdtls_path .. "/plugins/org.eclipse.equinox.launcher.jar"
+    if vim.fn.filereadable(launcher) ~= 1 then
+      launcher = vim.fn.glob(jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar")
+      if launcher == "" then
+        return
+      end
+      launcher = vim.split(launcher, "\n")[1]
+    end
 
     local root_dir = require("jdtls.setup").find_root({
       ".git",
@@ -39,12 +47,7 @@ return {
     local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
     local workspace_dir = vim.fn.stdpath("data") .. "/jdtls-workspace/" .. project_name
 
-    local config_dir = jdtls_path .. "/config_linux"
-    if vim.fn.has("mac") == 1 then
-      config_dir = jdtls_path .. "/config_mac"
-    elseif vim.fn.has("win32") == 1 then
-      config_dir = jdtls_path .. "/config_win"
-    end
+    local config_dir = jdtls_path .. "/config"
 
     local bundles = {}
     local function add_jars(pattern)
@@ -60,13 +63,11 @@ return {
     end
 
     if mason_registry.is_installed("java-debug-adapter") then
-      local java_debug_path = mason_registry.get_package("java-debug-adapter"):get_install_path()
-      add_jars(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar")
+      add_jars(mason_root .. "/share/java-debug-adapter/*.jar")
     end
 
     if mason_registry.is_installed("java-test") then
-      local java_test_path = mason_registry.get_package("java-test"):get_install_path()
-      add_jars(java_test_path .. "/extension/server/*.jar")
+      add_jars(mason_root .. "/share/java-test/*.jar")
     end
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -107,7 +108,10 @@ return {
     }
 
     jdtls.start_or_attach(config)
-    jdtls.setup_dap({ hotcodereplace = "auto" })
-    pcall(jdtls.dap.setup_dap_main_class_configs)
+
+    if type(jdtls.setup_dap) == "function" then
+      pcall(jdtls.setup_dap, { hotcodereplace = "auto" })
+    end
+
   end,
 }
