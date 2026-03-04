@@ -9,5 +9,5 @@ None, Down, Button5, 1
 
 # Slow Obsidian scroll speed (XWayland app class: obsidian)
 ".*[Oo]bsidian.*"
-None, Up,   Button4, 1, 0, 150000
-None, Down, Button5, 1, 0, 150000
+None, Up,   Button4, 1, 0, 300000
+None, Down, Button5, 1, 0, 300000
