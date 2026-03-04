@@ -6,3 +6,8 @@ None, Down, Button5, 3
 ".*[Cc]hat[Gg][Pp][Tt].*"
 None, Up,   Button4, 1
 None, Down, Button5, 1
+
+# Slow Obsidian scroll speed (XWayland app class: obsidian)
+".*[Oo]bsidian.*"
+None, Up,   Button4, 1, 0, 150000
+None, Down, Button5, 1, 0, 150000
