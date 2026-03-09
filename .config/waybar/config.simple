@@ -77,8 +77,8 @@
         },
         "on-click": "pavucontrol",
         "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
-        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+        "on-scroll-up": "$HOME/.config/hypr/scripts/volume.sh --inc",
+        "on-scroll-down": "$HOME/.config/hypr/scripts/volume.sh --dec",
         "tooltip-format": "Volume: {volume}%\nClick: Open volume control\nRight-click: Toggle mute\nScroll: Adjust volume"
     }
     

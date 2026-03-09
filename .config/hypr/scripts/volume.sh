@@ -4,6 +4,8 @@ iDIR="$HOME/.config/swaync/icons"
 sDIR="$HOME/.config/hypr/scripts"
 SINK="@DEFAULT_AUDIO_SINK@"
 SOURCE="@DEFAULT_AUDIO_SOURCE@"
+MAX_VOLUME_PERCENT=100
+MAX_VOLUME_FLOAT=1.0
 
 if command -v pamixer >/dev/null 2>&1; then
   AUDIO_BACKEND="pamixer"
@@ -72,6 +74,30 @@ is_source_muted() {
   fi
 }
 
+clamp_sink_volume() {
+  local volume
+  volume=$(get_sink_volume_value)
+  if [[ "$volume" =~ ^[0-9]+$ ]] && ((volume > MAX_VOLUME_PERCENT)); then
+    if [[ "$AUDIO_BACKEND" == "pamixer" ]]; then
+      pamixer --set-volume "$MAX_VOLUME_PERCENT" >/dev/null 2>&1
+    else
+      wpctl set-volume "$SINK" "$MAX_VOLUME_FLOAT" --limit "$MAX_VOLUME_FLOAT" >/dev/null 2>&1
+    fi
+  fi
+}
+
+clamp_source_volume() {
+  local volume
+  volume=$(get_source_volume_value)
+  if [[ "$volume" =~ ^[0-9]+$ ]] && ((volume > MAX_VOLUME_PERCENT)); then
+    if [[ "$AUDIO_BACKEND" == "pamixer" ]]; then
+      pamixer --default-source --set-volume "$MAX_VOLUME_PERCENT" >/dev/null 2>&1
+    else
+      wpctl set-volume "$SOURCE" "$MAX_VOLUME_FLOAT" --limit "$MAX_VOLUME_FLOAT" >/dev/null 2>&1
+    fi
+  fi
+}
+
 # Get Volume
 get_volume() {
   if [[ "$AUDIO_BACKEND" == "pamixer" ]]; then
@@ -124,9 +150,9 @@ inc_volume() {
     toggle_mute
   else
     if [[ "$AUDIO_BACKEND" == "pamixer" ]]; then
-      pamixer -i 5 --allow-boost --set-limit 150 && notify_user
+      pamixer -i 5 --set-limit "$MAX_VOLUME_PERCENT" && clamp_sink_volume && notify_user
     else
-      wpctl set-volume "$SINK" 5%+ --limit 1.5 && notify_user
+      wpctl set-volume "$SINK" 5%+ --limit "$MAX_VOLUME_FLOAT" && clamp_sink_volume && notify_user
     fi
   fi
 }
@@ -137,9 +163,9 @@ dec_volume() {
     toggle_mute
   else
     if [[ "$AUDIO_BACKEND" == "pamixer" ]]; then
-      pamixer -d 5 && notify_user
+      pamixer -d 5 && clamp_sink_volume && notify_user
     else
-      wpctl set-volume "$SINK" 5%- && notify_user
+      wpctl set-volume "$SINK" 5%- --limit "$MAX_VOLUME_FLOAT" && clamp_sink_volume && notify_user
     fi
   fi
 }
@@ -227,9 +253,9 @@ inc_mic_volume() {
     toggle_mic
   else
     if [[ "$AUDIO_BACKEND" == "pamixer" ]]; then
-      pamixer --default-source -i 5 && notify_mic_user
+      pamixer --default-source -i 5 --set-limit "$MAX_VOLUME_PERCENT" && clamp_source_volume && notify_mic_user
     else
-      wpctl set-volume "$SOURCE" 5%+ && notify_mic_user
+      wpctl set-volume "$SOURCE" 5%+ --limit "$MAX_VOLUME_FLOAT" && clamp_source_volume && notify_mic_user
     fi
   fi
 }
@@ -240,9 +266,9 @@ dec_mic_volume() {
     toggle_mic
   else
     if [[ "$AUDIO_BACKEND" == "pamixer" ]]; then
-      pamixer --default-source -d 5 && notify_mic_user
+      pamixer --default-source -d 5 && clamp_source_volume && notify_mic_user
     else
-      wpctl set-volume "$SOURCE" 5%- && notify_mic_user
+      wpctl set-volume "$SOURCE" 5%- --limit "$MAX_VOLUME_FLOAT" && clamp_source_volume && notify_mic_user
     fi
   fi
 }
