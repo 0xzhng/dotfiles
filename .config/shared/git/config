@@ -1,0 +1,30 @@
+# Personal identity is loaded from an ignored machine-local file.
+[include]
+	path = ~/.gitconfig.local
+
+[core]
+	editor = nvim
+	autocrlf = input
+
+[push]
+	default = simple
+
+[pull]
+	rebase = false
+
+[init]
+	defaultBranch = main
+
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	ci = commit
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	visual = !gitk
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

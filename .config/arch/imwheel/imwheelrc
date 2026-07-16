@@ -1,0 +1,8 @@
+"compx-2.4g-wireless-receiver-mouse"
+None, Up,   Button4, 3
+None, Down, Button5, 3
+
+# Slow ChatGPT Desktop scroll speed so the accelerated global rule does not apply.
+".*[Cc]hat[Gg][Pp][Tt].*"
+None, Up,   Button4, 1
+None, Down, Button5, 1

@@ -1,0 +1,39 @@
+confirm-close-surface = false
+
+term = xterm-ghostty
+command = /bin/zsh
+macos-option-as-alt = true
+
+font-family = "JetBrainsMono Nerd Font"
+font-size = 13
+font-shaping-break = cursor
+
+window-decoration = auto
+window-theme = ghostty
+macos-titlebar-style = hidden
+macos-titlebar-proxy-icon = hidden
+window-padding-x = 16
+window-padding-y = 12
+
+# Gruvbox Dark Hard background only; preserves the existing shell prompt/colors.
+background = #1d2021
+background-opacity = 1
+background-opacity-cells = false
+background-blur = 0
+unfocused-split-opacity = 1
+
+cursor-style = block
+cursor-style-blink = true
+cursor-color = cell-foreground
+cursor-text = #05070b
+cursor-click-to-move = true
+shell-integration = none
+
+custom-shader = ~/.config/ghostty/shaders/cursor_smear.glsl
+custom-shader-animation = always
+
+# Ctrl+V → normal text paste from clipboard.
+# Ctrl+Shift+V → send Ctrl+V byte (\x16) so Claude Code's clipboard handler
+# runs and can paste images from the clipboard.
+keybind = ctrl+v=paste_from_clipboard
+keybind = ctrl+shift+v=text:\x16

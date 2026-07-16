@@ -1,0 +1,17 @@
+.config/shared/tmux/plugins/
+.config/shared/opencode/
+.config/shared/.pi/
+node_modules/
+__pycache__/
+*.py[cod]
+dist/
+
+.config/arch/pulse/cookie
+.config/arch/hypr/.hyprlock-wallpaper.path
+.config/arch/hypr/sddm-lock-vars.conf
+.config/arch/hypr/bg1.png
+.config/arch/hypr/bg1.png.bak
+.env
+.env.*
+
+

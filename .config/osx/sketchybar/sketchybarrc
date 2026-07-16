@@ -1,0 +1,174 @@
+#!/usr/bin/env sh
+
+# ============================================================
+# sketchybar configuration — ported from Waybar
+# Layout: LEFT islands=[front_app] [apple] [clock], CENTER empty (notch-safe), RIGHT island=[wifi, volume, memory, cpu, battery]
+# Colors: Matugen Material Design (dark blue/purple theme)
+# ============================================================
+
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+ITEM_DIR="$CONFIG_DIR/items"
+
+# ── Color Palette (from Waybar colors.css / Matugen) ────────
+export BACKGROUND=0xff121318
+export SURFACE=0xff1e1f25
+export SURFACE_HIGH=0xff282a2f
+export SURFACE_HIGHEST=0xff33353a
+export SURFACE_BRIGHT=0xff38393f
+export SURFACE_VARIANT=0xff44464f
+export ON_BACKGROUND=0xffe2e2e9
+export ON_SURFACE=0xffe2e2e9
+export OUTLINE=0xff8f9099
+export OUTLINE_VARIANT=0xff44464f
+export PRIMARY=0xffb0c6ff
+export PRIMARY_CONTAINER=0xff2e4578
+export SECONDARY=0xffc0c6dc
+export SECONDARY_CONTAINER=0xff404659
+export TERTIARY=0xffe0bbde
+export TERTIARY_CONTAINER=0xff593d5a
+export ERROR=0xffffb4ab
+export ERROR_CONTAINER=0xff93000a
+export TRANSPARENT=0x00000000
+export GLASS=0x661e1f25
+export GLASS_BORDER=0x55c5c6d0
+
+# ── Fonts ───────────────────────────────────────────────────
+export FONT="SF Pro"
+export NERD_FONT="JetBrainsMono Nerd Font Mono"
+
+# ── Bar Appearance ──────────────────────────────────────────
+# Waybar: position=top, margin-top=3, margin-left=8, margin-right=8, layer=bottom
+sketchybar --bar \
+  height=32 \
+  color=$TRANSPARENT \
+  border_width=0 \
+  shadow=off \
+  position=top \
+  sticky=on \
+  padding_left=2 \
+  padding_right=10 \
+  y_offset=1 \
+  margin=4 \
+  corner_radius=10 \
+  blur_radius=70 \
+  notch_width=200 \
+  topmost=off \
+  font_smoothing=on
+
+# ── Default Values ──────────────────────────────────────────
+sketchybar --default \
+  icon.font="$NERD_FONT:Bold:14.0" \
+  icon.color=$ON_BACKGROUND \
+  icon.padding_left=6 \
+  icon.padding_right=4 \
+  label.font="$FONT:Medium:12.0" \
+  label.color=$ON_BACKGROUND \
+  label.padding_left=4 \
+  label.padding_right=6 \
+  background.color=$TRANSPARENT \
+  background.corner_radius=8 \
+  background.height=24 \
+  background.padding_left=2 \
+  background.padding_right=2 \
+  popup.background.color=$SURFACE \
+  popup.background.corner_radius=10 \
+  popup.background.border_width=1 \
+  popup.background.border_color=$SURFACE_VARIANT
+
+# ── Load Items ──────────────────────────────────────────────
+# LEFT: apple, front_app, clock
+source "$ITEM_DIR/tray.sh"
+
+# Left island spacing (transparent gaps between islands)
+sketchybar --add item left_gap_1 left \
+           --set left_gap_1 \
+             width=10 \
+             icon.drawing=off \
+             label.drawing=off \
+             background.drawing=off
+
+source "$ITEM_DIR/front_app.sh"
+
+sketchybar --add item left_gap_2 left \
+           --set left_gap_2 \
+              width=10 \
+              icon.drawing=off \
+              label.drawing=off \
+              background.drawing=off
+
+source "$ITEM_DIR/clock.sh"
+
+# Global click-away popup closer (apple/battery popups).
+sketchybar --add item popup_dismisser left \
+           --set popup_dismisser \
+             width=0 \
+             icon.drawing=off \
+             label.drawing=off \
+             background.drawing=off \
+             script="$PLUGIN_DIR/close_popups.sh"
+
+sketchybar --subscribe popup_dismisser front_app_switched space_change mouse.exited.global
+sketchybar --subscribe popup_dismisser mouse.entered.global
+
+# CENTER: intentionally empty for MacBook notch/camera
+
+# RIGHT: notifications, wifi, volume, gpu, temp, memory, cpu, battery (right items appear right-to-left)
+source "$ITEM_DIR/notification.sh"
+source "$ITEM_DIR/wifi.sh"
+source "$ITEM_DIR/volume.sh"
+source "$ITEM_DIR/temperature.sh"
+source "$ITEM_DIR/memory.sh"
+source "$ITEM_DIR/gpu.sh"
+source "$ITEM_DIR/cpu.sh"
+source "$ITEM_DIR/battery.sh"
+
+# ── Bracket Groups (Waybar island-style grouping) ──────────
+# Left island: window indicator
+sketchybar --add bracket left_window_island front_app \
+           --set left_window_island \
+              background.color=$GLASS \
+              background.border_color=$GLASS_BORDER \
+              background.border_width=1 \
+              background.corner_radius=10 \
+               background.height=26 \
+              padding_right=8 \
+              background.drawing=on
+
+# Left island: app indicator
+sketchybar --add bracket left_app_island apple_tray \
+           --set left_app_island \
+               background.color=$GLASS \
+               background.border_color=$GLASS_BORDER \
+               background.border_width=1 \
+               background.corner_radius=10 \
+                background.height=26 \
+               padding_right=8 \
+               background.drawing=on
+
+# Left island: clock
+sketchybar --add bracket left_clock_island clock \
+           --set left_clock_island \
+              background.color=$GLASS \
+              background.border_color=$GLASS_BORDER \
+             background.border_width=1 \
+             background.corner_radius=10 \
+               background.height=26 \
+             background.drawing=on
+
+# Right group
+sketchybar --add bracket right_group battery cpu gpu memory temperature volume wifi_icon notification_bell \
+           --set right_group \
+              background.color=$GLASS \
+              background.border_color=$GLASS_BORDER \
+              background.border_width=1 \
+              background.corner_radius=10 \
+              background.height=26 \
+              padding_right=8 \
+              background.drawing=on
+
+# ── Finalize ────────────────────────────────────────────────
+# Force an initial front_app update
+sketchybar --trigger front_app_switched
+sketchybar --update
+
+echo "sketchybar configuration loaded."
