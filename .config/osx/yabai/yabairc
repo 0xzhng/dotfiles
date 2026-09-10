@@ -16,7 +16,7 @@ yabai -m config split_ratio 0.50
 yabai -m config auto_balance off
 
 # ── Gaps & Padding ──────────────────────────────────────────
-yabai -m config top_padding 1
+yabai -m config top_padding 17
 yabai -m config bottom_padding 17
 yabai -m config left_padding 17
 yabai -m config right_padding 17
@@ -37,7 +37,7 @@ yabai -m config mouse_action2 resize
 yabai -m config mouse_drop_action swap
 
 # ── External Bar ────────────────────────────────────────────
-yabai -m config external_bar off
+yabai -m config external_bar off:0:0
 
 # ── Workspace Setup ─────────────────────────────────────────
 TARGET_SPACES=7
@@ -68,12 +68,6 @@ yabai -m rule --add app="^Preview$" manage=off
 yabai -m rule --add app="^Raycast$" manage=off
 yabai -m rule --add app="^Spotlight$" manage=off
 
-# ── Signals ─────────────────────────────────────────────────
-yabai -m signal --add event=space_changed action="sketchybar --trigger space_change"
-yabai -m signal --add event=window_focused action="sketchybar --set apple_tray popup.drawing=off; sketchybar --set battery popup.drawing=off; sketchybar --trigger window_focus_changed"
-yabai -m signal --add event=window_title_changed action="sketchybar --trigger title_change"
-yabai -m signal --add event=application_front_switched action="sketchybar --set apple_tray popup.drawing=off; sketchybar --set battery popup.drawing=off; sketchybar --trigger front_app_switched"
-
 # ── STRICT 5-WINDOW LIMIT ─────────────────────────────────────
 # Enforces exactly 5 managed windows per space maximum
 yabai -m signal --add event=window_created action="$HOME/.config/yabai/scripts/limit_windows.sh"
@@ -98,5 +92,8 @@ yabai -m signal --add event=display_removed action="$HOME/.config/yabai/scripts/
 # ── Enforce 5-window limit on startup ───────────────────────
 # Handles windows restored before yabai started
 $HOME/.config/yabai/scripts/enforce_limit_on_startup.sh >/dev/null 2>&1 &
+
+# ── Window Borders ──────────────────────────────────────────
+borders style=round width=5.0 active_color=0xffd79921 inactive_color=0xffd79921 &
 
 echo "yabai configuration loaded."
