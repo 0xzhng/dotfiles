@@ -1,18 +1,17 @@
-configuration{
+configuration {
     modi: "drun,run,window";
-    show: "drun";
-    icon-theme: "Oranchelo";
+    icon-theme: "breeze-dark";
     show-icons: true;
-    terminal: "alacritty";
-    drun-display-format: "{icon} {name}";
-    location: 0;
+    terminal: "ghostty";
+    drun-display-format: "{name}";
     disable-history: false;
     hide-scrollbar: true;
-    display-drun: "";
-    display-run: "   Run ";
-    display-window: " 󰕰  Window";
-    display-Network: " 󰤨  Network";
-    sidebar-mode: true;
+    display-drun: "Applications";
+    display-run: "Commands";
+    display-window: "Windows";
+    sidebar-mode: false;
+    matching: "fuzzy";
+    sort: true;
 }
 
-@theme "~/.config/rofi/gruvbox-material.rasi"
+@theme "~/.config/rofi/gruvbox-launcher.rasi"

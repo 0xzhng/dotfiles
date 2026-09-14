@@ -78,28 +78,16 @@ resolve_wallpaper_path() {
     return 1
 }
 
-portable_config_path() {
-    local path="$1"
-    if [[ "$path" == "$HOME"/* ]]; then
-        printf '$HOME/%s' "${path#"$HOME"/}"
-    else
-        printf '%s' "$path"
-    fi
-}
-
 update_wallpaper_vars() {
     local source="$1"
     local lock_path="$2"
-    local portable_source portable_lock
-    portable_source=$(portable_config_path "$source")
-    portable_lock=$(portable_config_path "$lock_path")
 
     mkdir -p "$CONFIG_DIR"
     {
-        printf '$HyprWallpaper = "%s"\n' "$portable_source"
-        printf '$HyprLockWallpaper = "%s"\n' "$portable_lock"
+        printf '$HyprWallpaper = "%s"\n' "$source"
+        printf '$HyprLockWallpaper = "%s"\n' "$lock_path"
     } > "$WALLPAPER_VARS"
-    printf '%s\n' "$portable_lock" > "$WALLPAPER_DEBUG"
+    printf '%s\n' "$lock_path" > "$WALLPAPER_DEBUG"
 }
 
 if ! SOURCE_WALL=$(resolve_wallpaper_path); then
@@ -113,7 +101,6 @@ convert_to_png_copy "$SOURCE_WALL" "$TARGET_BG"
 update_wallpaper_vars "$SOURCE_WALL" "$TARGET_BG"
 
 WALL="$SOURCE_WALL"
-WALL_CONFIG=$(portable_config_path "$WALL")
 
 # Build the monitor list dynamically so every active output gets a wallpaper.
 if ! readarray -t MONITORS < <(hyprctl monitors | awk '/^Monitor / {print $2}'); then
@@ -126,9 +113,9 @@ fi
 
 # Generate a minimal hyprpaper config on every run.
 {
-    printf 'preload=%s\n' "$WALL_CONFIG"
+    printf 'preload=%s\n' "$WALL"
     for monitor in "${MONITORS[@]}"; do
-        printf 'wallpaper=%s,%s\n' "$monitor" "$WALL_CONFIG"
+        printf 'wallpaper=%s,%s\n' "$monitor" "$WALL"
     done
     printf 'splash=false\n'
 } > "$AUTOCONF"

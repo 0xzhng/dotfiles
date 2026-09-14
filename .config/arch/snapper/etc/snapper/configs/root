@@ -1,9 +1,9 @@
 SUBVOLUME="/"
 FSTYPE="btrfs"
 
-# Allow administrators to manage snapshots without naming a machine-specific user.
-ALLOW_USERS="root"
-ALLOW_GROUPS="wheel"
+# allow both root and oslen to manage snapshots
+ALLOW_USERS="root oslen"
+ALLOW_GROUPS=""
 SYNC_ACL="yes"
 COMPARE="yes"
 

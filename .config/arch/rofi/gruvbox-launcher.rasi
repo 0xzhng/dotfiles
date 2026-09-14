@@ -1,0 +1,107 @@
+/* Gruvbox launcher: matches Ghostty and Hyprland's yellow borders. */
+* {
+    font: "JetBrainsMono Nerd Font 11";
+    background-color: transparent;
+    text-color: #ebdbb2;
+    border-color: #3c3836;
+    spacing: 0;
+}
+
+window {
+    location: center;
+    anchor: center;
+    y-offset: -380px;
+    width: 680px;
+    background-color: #1d2021;
+    border: 1px;
+    border-color: #d79921;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+mainbox {
+    children: [ inputbar, message, listview ];
+    spacing: 8px;
+}
+
+inputbar {
+    children: [ textbox-search, entry ];
+    background-color: #282828;
+    border: 1px;
+    border-color: #504945;
+    border-radius: 10px;
+    padding: 16px;
+    spacing: 12px;
+}
+
+textbox-search {
+    str: "";
+    text-color: #fabd2f;
+    expand: false;
+    vertical-align: 0.5;
+}
+
+entry {
+    placeholder: "Search…";
+    placeholder-color: #a89984;
+    vertical-align: 0.5;
+    cursor: text;
+}
+
+listview {
+    lines: 6;
+    columns: 1;
+    fixed-height: true;
+    dynamic: false;
+    scrollbar: false;
+    spacing: 3px;
+}
+
+element {
+    children: [ element-icon, element-text ];
+    padding: 9px 12px;
+    spacing: 14px;
+    border-radius: 8px;
+    text-color: #ebdbb2;
+}
+
+element normal.normal, element alternate.normal {
+    background-color: transparent;
+    text-color: #ebdbb2;
+}
+
+element normal.active, element alternate.active {
+    background-color: #282828;
+    text-color: #fabd2f;
+}
+
+element normal.urgent, element alternate.urgent {
+    text-color: #fb4934;
+}
+
+element selected.normal, element selected.active, element selected.urgent {
+    background-color: #32302f;
+    text-color: #fabd2f;
+}
+
+element-icon {
+    size: 24px;
+    vertical-align: 0.5;
+}
+
+element-text {
+    vertical-align: 0.5;
+    text-color: inherit;
+    highlight: bold;
+}
+
+message {
+    border-radius: 8px;
+    background-color: #282828;
+    padding: 12px;
+}
+
+error-message {
+    children: [ textbox ];
+    padding: 16px;
+}

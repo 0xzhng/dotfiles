@@ -3,12 +3,16 @@
 precision mediump float;
 
 // Hyprland full-screen shader for a subtle “digital vibrance” effect.
-// Increases saturation slightly while nudging value for deeper blacks.
+// Keep existing vibrance; deepen laptop shadows without lifting pure black.
 
 layout(location = 0) out vec4 fragColor;
 in vec2 v_texcoord;
 
 uniform sampler2D tex;
+uniform int wl_output;
+
+// eDP-1 is monitor ID 0 (hyprctl monitors -j).
+const int LAPTOP_OUTPUT = 0;
 
 vec3 rgb2hsv(vec3 c) {
     vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -35,7 +39,12 @@ void main() {
 
     vec3 hsv = rgb2hsv(color.rgb);
     hsv.y = clamp(hsv.y * 1.22, 0.0, 1.0); // bump saturation ~22%
-    hsv.z = clamp(hsv.z * 0.98 + 0.02, 0.0, 1.0); // protect highlights, deepen lows
+    if (wl_output == LAPTOP_OUTPUT) {
+        // Stronger shadow darkening; black stays 0 and white stays 1.
+        hsv.z = pow(clamp(hsv.z, 0.0, 1.0), 1.35);
+    } else {
+        hsv.z = clamp(hsv.z * 0.98 + 0.02, 0.0, 1.0);
+    }
 
     fragColor = vec4(hsv2rgb(hsv), color.a);
 }

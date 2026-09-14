@@ -53,27 +53,15 @@ convert_to_png_copy() {
     chmod 644 "$dest" >/dev/null 2>&1 || true
 }
 
-portable_config_path() {
-    local path="$1"
-    if [[ "$path" == "$HOME"/* ]]; then
-        printf '$HOME/%s' "${path#"$HOME"/}"
-    else
-        printf '%s' "$path"
-    fi
-}
-
 write_wallpaper_vars() {
     local source="$1"
     local lock_path="$2"
-    local portable_source portable_lock
-    portable_source=$(portable_config_path "$source")
-    portable_lock=$(portable_config_path "$lock_path")
     mkdir -p "$CONFIG_DIR"
     {
-        printf '$HyprWallpaper = "%s"\n' "$portable_source"
-        printf '$HyprLockWallpaper = "%s"\n' "$portable_lock"
+        printf '$HyprWallpaper = "%s"\n' "$source"
+        printf '$HyprLockWallpaper = "%s"\n' "$lock_path"
     } > "$WALLPAPER_VARS"
-    printf '%s\n' "$portable_lock" > "$WALLPAPER_DEBUG"
+    printf '%s\n' "$lock_path" > "$WALLPAPER_DEBUG"
 }
 
 resolve_wallpaper_source() {
@@ -118,8 +106,7 @@ sync_wallpaper_var() {
     recorded_lock=$(awk -F'"' '/\$HyprLockWallpaper/ {print $2; exit}' "$WALLPAPER_VARS" 2>/dev/null) || true
     if [ -n "$recorded_source" ] && [ "$recorded_source" = "$path" ] && \
        [ -n "$recorded_lock" ] && [ -f "$recorded_lock" ]; then
-        portable_config_path "$recorded_lock" > "$WALLPAPER_DEBUG"
-        printf '\n' >> "$WALLPAPER_DEBUG"
+        printf '%s\n' "$recorded_lock" > "$WALLPAPER_DEBUG"
         return
     fi
 

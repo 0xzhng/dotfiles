@@ -1,0 +1,40 @@
+confirm-close-surface = false
+
+term = xterm-ghostty
+command = /bin/bash
+
+font-family = "JetBrainsMono Nerd Font"
+font-size = 13
+font-shaping-break = cursor
+
+window-decoration = none
+window-theme = ghostty
+window-padding-x = 16
+window-padding-y = 12
+
+# Gruvbox Dark Hard background only; preserves the existing shell prompt/colors.
+background = #1d2021
+background-opacity = 1
+background-opacity-cells = false
+background-blur = 0
+unfocused-split-opacity = 1
+
+cursor-style = block
+cursor-style-blink = true
+cursor-color = cell-foreground
+cursor-text = #05070b
+cursor-click-to-move = true
+shell-integration = none
+
+custom-shader = ~/.config/ghostty/shaders/cursor_smear.glsl
+custom-shader-animation = always
+
+keybind = ctrl+shift+c=unbind
+keybind = ctrl+shift+v=unbind
+keybind = ctrl+c=copy_to_clipboard
+keybind = ctrl+v=paste_from_clipboard
+keybind = ctrl+k=text:\x03
+# Logical Super is physical Alt after Hyprland's Alt/Windows swap.
+# Send tmux's existing Meta-R/U navigation sequences.
+keybind = super+r=esc:r
+keybind = super+u=esc:u

@@ -43,8 +43,6 @@ SELECTED_PATH="$WALLPAPER_DIR/$SELECTED_WALL"
 # === SET WALLPAPER COLORS ===
 if command -v matugen >/dev/null 2>&1; then
     matugen image "$SELECTED_PATH"
-    # Generated image metadata is unused and embeds the machine-specific home path.
-    sed -i '/^\$image = /d' "$CONFIG_DIR/colors.conf"
 fi
 
 # === UPDATE WALLPAPER FILES ===

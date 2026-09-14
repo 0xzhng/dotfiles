@@ -1,3 +1,9 @@
+/**
+ * Gruvbox Material (Medium) theme
+ * Taken from: https://user-images.githubusercontent.com/58662350/213884019-cbcd5f00-5bef-4a37-9139-0570770330b6.png
+ * Repository: https://github.com/hiimsergey/rofi-gruvbox-material
+ */
+
 * {
     bg0: #282828;
     bg1: #32302f;
