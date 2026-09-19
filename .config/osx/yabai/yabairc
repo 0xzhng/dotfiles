@@ -68,6 +68,10 @@ yabai -m rule --add app="^Preview$" manage=off
 yabai -m rule --add app="^Raycast$" manage=off
 yabai -m rule --add app="^Spotlight$" manage=off
 
+# Remember Finder's last real folder before its windows are closed.
+yabai -m signal --add label=finder_remember_focus event=window_focused app="^Finder$" action="$HOME/.config/skhd/scripts/finder_window.sh remember"
+yabai -m signal --add label=finder_remember_folder event=window_title_changed app="^Finder$" active=yes action="$HOME/.config/skhd/scripts/finder_window.sh remember"
+
 # ── STRICT 5-WINDOW LIMIT ─────────────────────────────────────
 # Enforces exactly 5 managed windows per space maximum
 yabai -m signal --add event=window_created action="$HOME/.config/yabai/scripts/limit_windows.sh"

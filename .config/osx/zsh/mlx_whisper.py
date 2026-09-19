@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
 import argparse
+import os
 import subprocess
 import tempfile
 from pathlib import Path
 
-MODELS = {
-    "small": "mlx-community/whisper-small-mlx",
-    "medium": "mlx-community/whisper-medium",
-    "large": "mlx-community/whisper-large-v3-turbo",
+MODEL_ENV = {
+    "small": "MLX_WHISPER_SMALL_MODEL",
+    "medium": "MLX_WHISPER_MEDIUM_MODEL",
+    "large": "MLX_WHISPER_LARGE_MODEL",
 }
 MERGED_OUTPUT_NAME = "merged_transcript.txt"
 
@@ -90,7 +91,10 @@ def main() -> int:
         raise SystemExit(f"File not found: {', '.join(missing_files)}")
 
     output_dir = Path.cwd()
-    model = MODELS[args.size]
+    model_env = MODEL_ENV[args.size]
+    model = os.environ.get(model_env)
+    if not model:
+        raise SystemExit(f"Set {model_env} in ~/dotfiles/.env")
     if args.merge:
         write_merged_transcript(args.files, model, output_dir)
     else:

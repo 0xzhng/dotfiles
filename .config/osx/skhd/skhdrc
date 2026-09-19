@@ -26,7 +26,7 @@ alt - g : yabai -m window --toggle split
 alt - space : skhd -k "cmd - space"
 
 # ── File Manager ────────────────────────────────────────────
-alt - e : open -a "Finder"
+alt - e : ~/.config/skhd/scripts/finder_window.sh open
 
 # ── App-specific launcher helpers ───────────────────────────
 shift + alt - z : ~/.config/skhd/scripts/open_zen_here.sh

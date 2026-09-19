@@ -13,5 +13,6 @@ dist/
 .config/arch/hypr/bg1.png.bak
 .env
 .env.*
+!.env.example
 
 
