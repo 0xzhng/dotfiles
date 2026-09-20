@@ -1,0 +1,42 @@
+{
+  "lastChangelogVersion": "0.85.1",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.6-sol",
+  "defaultThinkingLevel": "minimal",
+  "transport": "sse",
+  "thinkingBudgets": {
+    "minimal": 1024,
+    "low": 4096,
+    "medium": 10240,
+    "high": 16384,
+    "xhigh": 32768
+  },
+  "packages": [
+    "npm:pi-mcp-adapter",
+    "npm:@spences10/pi-lsp",
+    "npm:context-mode",
+    "npm:pi-btw",
+    "npm:@plannotator/pi-extension",
+    "npm:pi-plan-mode",
+    "npm:pi-nvidia-nim",
+    "npm:pi-powerline-footer",
+    "npm:pi-image-tools",
+    "npm:@injaneity/pi-computer-use",
+    "npm:@samfp/pi-memory",
+    "npm:@kinarajv/pi-tps-extensions",
+    "npm:@baggiiiie/pi-goal",
+    "npm:@kmiyh/pi-codex-plan-limits",
+    "npm:pi-subagents",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:pi-openai-fast-mode",
+    "npm:pi-token-burden",
+    "npm:@diegopetrucci/pi-context-inspector",
+    "git:github.com/DietrichGebert/ponytail"
+  ],
+  "registries": {
+    "@react-bits": "https://reactbits.dev/r/{name}.json"
+  },
+  "theme": "gruvbox-dark-hard",
+  "enableInstallTelemetry": false,
+  "hideThinkingBlock": false
+}

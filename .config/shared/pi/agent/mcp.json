@@ -1,0 +1,253 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ],
+      "lifecycle": "eager"
+    },
+    "brightspace": {
+      "command": "uv",
+      "args": [
+        "run",
+        "brightspace-mcp"
+      ],
+      "lifecycle": "lazy",
+      "cwd": "~/mcp/server/brightspace"
+    },
+    "wireshark": {
+      "command": "node",
+      "args": [
+        "index.js"
+      ],
+      "lifecycle": "lazy",
+      "cwd": "~/mcp/server/wireshark"
+    },
+    "gradescope": {
+      "command": "uv",
+      "args": [
+        "run",
+        "python",
+        "-m",
+        "gradescope_mcp"
+      ],
+      "lifecycle": "lazy",
+      "cwd": "~/mcp/server/gradescope"
+    },
+    "google-drive": {
+      "command": "node",
+      "args": [
+        "dist/index.js"
+      ],
+      "env": {
+        "GOOGLE_DRIVE_OAUTH_CREDENTIALS": "${HOME}/.config/google-drive-mcp/gcp-oauth.keys.json",
+        "GOOGLE_DRIVE_MCP_TOKEN_PATH": "${HOME}/.config/google-drive-mcp/tokens.json",
+        "GOOGLE_DRIVE_MCP_ENABLED_MODULES": "drive"
+      },
+      "exposeResources": false,
+      "lifecycle": "lazy",
+      "timeoutMs": 120000,
+      "cwd": "~/mcp/server/google-drive"
+    },
+    "google-docs": {
+      "command": "node",
+      "args": [
+        "dist/index.js"
+      ],
+      "env": {
+        "GOOGLE_DRIVE_OAUTH_CREDENTIALS": "${HOME}/.config/google-drive-mcp/gcp-oauth.keys.json",
+        "GOOGLE_DRIVE_MCP_TOKEN_PATH": "${HOME}/.config/google-drive-mcp/tokens.json",
+        "GOOGLE_DRIVE_MCP_ENABLED_MODULES": "docs"
+      },
+      "exposeResources": false,
+      "lifecycle": "lazy",
+      "timeoutMs": 120000,
+      "cwd": "~/mcp/server/google-drive"
+    },
+    "google-sheets": {
+      "command": "node",
+      "args": [
+        "dist/index.js"
+      ],
+      "env": {
+        "GOOGLE_DRIVE_OAUTH_CREDENTIALS": "${HOME}/.config/google-drive-mcp/gcp-oauth.keys.json",
+        "GOOGLE_DRIVE_MCP_TOKEN_PATH": "${HOME}/.config/google-drive-mcp/tokens.json",
+        "GOOGLE_DRIVE_MCP_ENABLED_MODULES": "sheets"
+      },
+      "exposeResources": false,
+      "lifecycle": "lazy",
+      "timeoutMs": 120000,
+      "cwd": "~/mcp/server/google-drive"
+    },
+    "google-slides": {
+      "command": "node",
+      "args": [
+        "dist/index.js"
+      ],
+      "env": {
+        "GOOGLE_DRIVE_OAUTH_CREDENTIALS": "${HOME}/.config/google-drive-mcp/gcp-oauth.keys.json",
+        "GOOGLE_DRIVE_MCP_TOKEN_PATH": "${HOME}/.config/google-drive-mcp/tokens.json",
+        "GOOGLE_DRIVE_MCP_ENABLED_MODULES": "slides"
+      },
+      "exposeResources": false,
+      "lifecycle": "lazy",
+      "timeoutMs": 120000,
+      "cwd": "~/mcp/server/google-drive"
+    },
+    "google-calendar": {
+      "command": "node",
+      "args": [
+        "dist/index.js"
+      ],
+      "env": {
+        "GOOGLE_DRIVE_OAUTH_CREDENTIALS": "${HOME}/.config/google-drive-mcp/gcp-oauth.keys.json",
+        "GOOGLE_DRIVE_MCP_TOKEN_PATH": "${HOME}/.config/google-drive-mcp/tokens.json",
+        "GOOGLE_DRIVE_MCP_ENABLED_MODULES": "calendar"
+      },
+      "exposeResources": false,
+      "lifecycle": "lazy",
+      "timeoutMs": 120000,
+      "cwd": "~/mcp/server/google-drive"
+    },
+    "spotify": {
+      "command": "node",
+      "args": [
+        "build/index.js"
+      ],
+      "lifecycle": "lazy",
+      "cwd": "~/mcp/server/spotify"
+    },
+    "notebooklm": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "notebooklm-mcp@latest"
+      ],
+      "lifecycle": "lazy"
+    },
+    "notebooklm-admin": {
+      "command": "sh",
+      "args": [
+        "-lc",
+        "exec node \"$HOME/.config/opencode/mcp/notebooklm-admin.mjs\""
+      ],
+      "lifecycle": "lazy"
+    },
+    "thunderbird": {
+      "command": "node",
+      "args": [
+        "mcp-bridge.cjs"
+      ],
+      "lifecycle": "lazy",
+      "timeoutMs": 5000,
+      "cwd": "~/mcp/server/thunderbird"
+    },
+    "papers": {
+      "command": "uv",
+      "args": [
+        "run",
+        "paper-search-mcp"
+      ],
+      "lifecycle": "lazy",
+      "cwd": "~/mcp/server/papers"
+    },
+    "obsidian": {
+      "command": "sh",
+      "args": [
+        "-lc",
+        "exec npx -y @bitbonsai/mcpvault@latest \"$HOME/notes/western\""
+      ],
+      "lifecycle": "lazy"
+    },
+    "discord": {
+      "command": "/opt/homebrew/bin/uv",
+      "args": [
+        "run",
+        "python",
+        "main.py"
+      ],
+      "lifecycle": "lazy",
+      "cwd": "~/mcp/server/discord"
+    },
+    "goodnotes": {
+      "command": "uv",
+      "args": [
+        "run",
+        "python",
+        "server.py"
+      ],
+      "lifecycle": "lazy",
+      "cwd": "~/mcp/server/goodnotes"
+    },
+    "marketplace": {
+      "command": "uv",
+      "args": [
+        "run",
+        "python",
+        "server.py"
+      ],
+      "lifecycle": "lazy",
+      "timeoutMs": 120000,
+      "cwd": "~/mcp/server/marketplace"
+    },
+    "autotrader": {
+      "command": "uv",
+      "args": [
+        "run",
+        "python",
+        "server.py"
+      ],
+      "lifecycle": "lazy",
+      "timeoutMs": 120000,
+      "cwd": "~/mcp/server/autotrader"
+    },
+    "youtube": {
+      "command": "node",
+      "args": [
+        "dist/cli.js"
+      ],
+      "env": {
+        "YTDLP_PATH": "${HOME}/.local/bin/yt-dlp",
+        "FFMPEG_PATH": "/opt/homebrew/bin/ffmpeg",
+        "FFPROBE_PATH": "/opt/homebrew/bin/ffprobe",
+        "YOUTUBE_MCP_MAX_DURATION_SECONDS": "1800",
+        "YOUTUBE_MCP_MAX_FILE_SIZE": "500M"
+      },
+      "lifecycle": "lazy",
+      "timeoutMs": 600000,
+      "cwd": "~/mcp/server/youtube"
+    },
+    "reactbits": {
+      "command": "node",
+      "args": [
+        "dist/index.js"
+      ],
+      "lifecycle": "lazy",
+      "cwd": "~/mcp/server/reactbits-mcp-server"
+    },
+    "firecrawl": {
+      "command": "node",
+      "args": [
+        "dist/index.js"
+      ],
+      "env": {
+        "FIRECRAWL_API_URL": "http://127.0.0.1:3002"
+      },
+      "lifecycle": "lazy",
+      "timeoutMs": 120000,
+      "cwd": "~/mcp/server/firecrawl-mcp-server"
+    },
+    "vmr-canada": {
+      "command": "uv",
+      "args": [
+        "run",
+        "vmr-canada-mcp"
+      ],
+      "lifecycle": "lazy",
+      "timeoutMs": 120000,
+      "cwd": "~/mcp/server/vmr-canada"
+    }
+  }
+}
