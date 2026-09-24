@@ -9,7 +9,7 @@ from pathlib import Path
 home = Path.home()
 pattern = r"(?ms)^glow\(\) \{\n.*?^\}"
 wrapper = re.search(pattern, (home / ".zshrc").read_text()).group()
-mirror = Path(__file__).resolve().parent.parent / "zsh/.zshrc"
+mirror = Path(__file__).resolve().parents[2] / "osx/zsh/.zshrc"
 assert wrapper == re.search(pattern, mirror.read_text()).group(), "Wrappers differ"
 for path in (home / ".zshrc", mirror):
     subprocess.run(["zsh", "-n", str(path)], check=True)
