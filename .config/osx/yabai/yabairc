@@ -98,6 +98,6 @@ yabai -m signal --add event=display_removed action="$HOME/.config/yabai/scripts/
 $HOME/.config/yabai/scripts/enforce_limit_on_startup.sh >/dev/null 2>&1 &
 
 # ── Window Borders ──────────────────────────────────────────
-borders style=round width=5.0 active_color=0xffd79921 inactive_color=0xffd79921 &
+borders style=round width=5.0 active_color=0xffd79921 inactive_color=0xffd79921 blacklist="iPhone Mirroring" &
 
 echo "yabai configuration loaded."
