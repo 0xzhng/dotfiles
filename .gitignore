@@ -2,6 +2,9 @@
 .config/shared/opencode/
 # Pi: ignore runtime/private state by default; allow only reviewed portable config.
 .config/shared/pi/agent/*
+!.config/shared/pi/agent/extensions/
+.config/shared/pi/agent/extensions/*
+!.config/shared/pi/agent/extensions/codex-usage.ts
 !.config/shared/pi/agent/settings.json
 !.config/shared/pi/agent/keybindings.json
 !.config/shared/pi/agent/models.json

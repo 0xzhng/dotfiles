@@ -225,19 +225,18 @@
         "dist/index.js"
       ],
       "lifecycle": "lazy",
-      "cwd": "~/mcp/server/reactbits-mcp-server"
+      "cwd": "~/mcp/server/reactbits"
     },
     "firecrawl": {
-      "command": "node",
+      "command": "/bin/bash",
       "args": [
-        "dist/index.js"
+        "/Users/oslen/mcp/scripts/bridges/firecrawl.sh"
       ],
       "env": {
         "FIRECRAWL_API_URL": "http://127.0.0.1:3002"
       },
-      "lifecycle": "lazy",
-      "timeoutMs": 120000,
-      "cwd": "~/mcp/server/firecrawl-mcp-server"
+      "timeout": 120,
+      "cwd": "~/mcp/server/firecrawl"
     },
     "vmr-canada": {
       "command": "uv",
