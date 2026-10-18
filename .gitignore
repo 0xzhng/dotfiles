@@ -5,6 +5,8 @@
 !.config/shared/pi/agent/extensions/
 .config/shared/pi/agent/extensions/*
 !.config/shared/pi/agent/extensions/codex-usage.ts
+!.config/shared/pi/agent/pi-gondolin
+!.config/shared/pi/agent/SYSTEM.md
 !.config/shared/pi/agent/settings.json
 !.config/shared/pi/agent/keybindings.json
 !.config/shared/pi/agent/models.json

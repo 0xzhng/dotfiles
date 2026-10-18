@@ -20,7 +20,7 @@ yabai -m config top_padding 17
 yabai -m config bottom_padding 17
 yabai -m config left_padding 17
 yabai -m config right_padding 17
-yabai -m config window_gap 4
+yabai -m config window_gap 16
 
 # ── Window Appearance ───────────────────────────────────────
 yabai -m config window_shadow on
