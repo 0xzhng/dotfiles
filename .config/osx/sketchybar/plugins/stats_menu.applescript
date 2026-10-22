@@ -1,7 +1,7 @@
 on run argv
-  if (count of argv) is not 1 then error "Specify CPU, GPU, or RAM."
+  if (count of argv) is not 1 then error "Specify CPU, GPU, RAM, or Sensors."
   set moduleName to item 1 of argv
-  if moduleName is not in {"CPU", "GPU", "RAM"} then error "Unknown Stats module."
+  if moduleName is not in {"CPU", "GPU", "RAM", "Sensors"} then error "Unknown Stats module."
   tell application "System Events"
     if not (exists process "Stats") then
       display notification "Open Stats first to use its menu." with title "SketchyBar"

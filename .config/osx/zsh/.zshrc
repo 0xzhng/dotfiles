@@ -27,10 +27,8 @@ export VLLM_API_KEY="dummy"
 if [[ -r "$HOME/dotfiles/.env" ]]; then
   source "$HOME/dotfiles/.env"
   typeset +x LOCAL_LLM_API_KEY DECODO_PROXY_URL \
-    LLAMA_SERVER_MODEL LLAMA_SERVER_ALIAS LLAMA_SERVER_API_KEY_FILE LLAMA_SERVER_COMMAND \
-    MTPLX_MODEL MTPLX_MODEL_ID MTPLX_SERVER_COMMAND \
-    MLX_VLM_PRIMARY_MODEL MLX_VLM_PRIMARY_MODEL_CACHE MLX_VLM_PRIMARY_COMMAND \
-    MLX_VLM_SECONDARY_MODEL MLX_VLM_SECONDARY_MODEL_CACHE MLX_VLM_SECONDARY_COMMAND \
+    LLAMA_SERVER_MODEL LLAMA_SERVER_ALIAS LLAMA_SERVER_API_KEY_FILE \
+    QWEN_IMAGE_MODEL QWEN_IMAGE_TEXT_ENCODER QWEN_IMAGE_VAE \
     MLX_WHISPER_SMALL_MODEL MLX_WHISPER_MEDIUM_MODEL MLX_WHISPER_LARGE_MODEL
 fi
 
@@ -41,7 +39,7 @@ mlx-whisper() {
     python3 "$HOME/dotfiles/.config/osx/zsh/mlx_whisper.py" "$@"
 }
 
-llm-server-local() {
+qwen3.8-GGUF() {
   local model="${LLAMA_SERVER_MODEL:-}"
   local model_alias="${LLAMA_SERVER_ALIAS:-}"
   local api_key_file="${LLAMA_SERVER_API_KEY_FILE:-}"
@@ -64,7 +62,7 @@ llm-server-local() {
     --host 0.0.0.0 \
     --port 8080 \
     --api-key-file "$api_key_file" \
-    --ctx-size 262144 \
+    --ctx-size 32768 \
     --n-gpu-layers 99 \
     --flash-attn on \
     --cache-type-k q8_0 \
@@ -79,113 +77,46 @@ llm-server-local() {
     "$@"
 }
 
-_mtplx_server_local() {
-  local model="${MTPLX_MODEL:-}"
-  local model_id="${MTPLX_MODEL_ID:-}"
-  local server="$HOME/.local/bin/mtplx"
-  local api_key_file="${LLAMA_SERVER_API_KEY_FILE:-}"
+qwen2.1-image() {
+  local runtime="$HOME/.local/bin/sd-cli"
+  if [[ ! -x "$runtime" ]]; then
+    echo "Image runtime not found: $runtime"
+    return 1
+  fi
+  if [[ "$#" -eq 0 ]]; then
+    echo 'Usage: qwen2.1-image -p "your prompt" -o image.png [sd-cli options]'
+    return 2
+  fi
+  if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    command "$runtime" --help
+    return $?
+  fi
+  local file
+  for file in "${QWEN_IMAGE_MODEL:-}" "${QWEN_IMAGE_TEXT_ENCODER:-}" "${QWEN_IMAGE_VAE:-}"; do
+    if [[ ! -r "$file" ]]; then
+      echo "Qwen Image model, text encoder, or VAE missing: $file"
+      echo "Check QWEN_IMAGE_MODEL, QWEN_IMAGE_TEXT_ENCODER, and QWEN_IMAGE_VAE in $HOME/dotfiles/.env."
+      return 1
+    fi
+  done
 
-  if [[ -z "$model" || -z "$model_id" || -z "$api_key_file" ]]; then
-    echo "Set MTPLX_MODEL, MTPLX_MODEL_ID, and LLAMA_SERVER_API_KEY_FILE in $HOME/dotfiles/.env."
-    return 1
-  fi
-  if [[ ! -x "$server" ]]; then
-    echo "MTPLX server not found: $server"
-    return 1
-  fi
-  if [[ ! -d "$model" ]]; then
-    echo "MTPLX model is not cached: $model"
-    return 1
-  fi
-  if [[ ! -r "$api_key_file" ]]; then
-    echo "MTPLX API key file not readable: $api_key_file"
-    return 1
-  fi
-
-  command "$server" serve \
-    --model "$model" \
-    --model-id "$model_id" \
-    --host 0.0.0.0 \
-    --port 8089 \
-    --api-key-file "$api_key_file" \
-    --max-tokens 16384 \
-    --reasoning auto \
-    --reasoning-effort medium \
-    --preserve-thinking auto \
-    --tool-prompt-mode native \
-    --no-stats-footer \
-    "$@"
-}
-
-_mlx_vlm_secondary_local() {
-  local model="${MLX_VLM_SECONDARY_MODEL:-}"
-  local model_cache="${MLX_VLM_SECONDARY_MODEL_CACHE:-}"
-  local server="$HOME/.local/bin/mlx_vlm.server"
-
-  if [[ -z "$model" || -z "$model_cache" ]]; then
-    echo "Set MLX_VLM_SECONDARY_MODEL and MLX_VLM_SECONDARY_MODEL_CACHE in $HOME/dotfiles/.env."
-    return 1
-  fi
-  if [[ ! -x "$server" ]]; then
-    echo "MLX-VLM server not found: $server"
-    return 1
-  fi
-  if [[ ! -d "$model_cache/snapshots" ]]; then
-    echo "Prism model is not cached: $model_cache"
-    return 1
-  fi
-
-  command "$server" \
-    --model "$model" \
-    --host 0.0.0.0 \
-    --port 8089 \
-    --max-tokens 16384 \
-    --enable-thinking \
-    --kv-bits 4 \
-    --kv-quant-scheme uniform \
-    --kv-group-size 64 \
-    --max-kv-size 262144 \
-    "$@"
-}
-
-_mlx_vlm_primary_local() {
-  local model="${MLX_VLM_PRIMARY_MODEL:-}"
-  local model_cache="${MLX_VLM_PRIMARY_MODEL_CACHE:-}"
-  local server="$HOME/.local/bin/mlx_vlm.server"
-
-  if [[ -z "$model" || -z "$model_cache" ]]; then
-    echo "Set MLX_VLM_PRIMARY_MODEL and MLX_VLM_PRIMARY_MODEL_CACHE in $HOME/dotfiles/.env."
-    return 1
-  fi
-  if [[ ! -x "$server" ]]; then
-    echo "MLX-VLM server not found: $server"
-    return 1
-  fi
-  if [[ ! -d "$model_cache/snapshots" ]]; then
-    echo "MLX model is not cached: $model_cache"
-    return 1
-  fi
-
-  command "$server" \
-    --model "$model" \
-    --host 0.0.0.0 \
-    --port 8089 \
-    --max-tokens 16384 \
-    --enable-thinking \
-    --kv-bits 4 \
-    --kv-quant-scheme uniform \
-    --kv-group-size 64 \
-    --max-kv-size 262144 \
+  # The INT8 text encoder requires CPU kernels unavailable in the Metal backend.
+  command "$runtime" \
+    --diffusion-model "$QWEN_IMAGE_MODEL" \
+    --llm "$QWEN_IMAGE_TEXT_ENCODER" \
+    --vae "$QWEN_IMAGE_VAE" \
+    --cfg-scale 6.0 \
+    --sampling-method euler \
+    --offload-to-cpu \
+    --backend te=cpu \
     "$@"
 }
 
 list() {
   if [[ "$#" -eq 1 && "$1" == "--models" ]]; then
-    printf '%-16s %s\n' \
-      "${LLAMA_SERVER_COMMAND:-llm-server-local}" "llama.cpp on :8080" \
-      "${MTPLX_SERVER_COMMAND:-mtplx-server-local}" "MTPLX on :8089" \
-      "${MLX_VLM_PRIMARY_COMMAND:-mlx-vlm-primary}" "MLX-VLM on :8089" \
-      "${MLX_VLM_SECONDARY_COMMAND:-mlx-vlm-secondary}" "MLX-VLM on :8089" \
+    printf '%-20s %s\n' \
+      "qwen2.1-image" "Qwen Image 2.1 — image generation" \
+      "qwen3.8-GGUF" "Qwen 3.8 27B Q8_0 — llama.cpp on :8080" \
       "mlx-whisper-server" "MLX Whisper dictation — F5 while enabled"
     return 0
   fi
@@ -194,21 +125,10 @@ list() {
   return 2
 }
 
-# Register private command names from .env without publishing them.
-_register_private_command() {
-  local name="$1"
-  local target="$2"
-  case "$name" in
-    ""|[!A-Za-z_]*|*[!A-Za-z0-9_.-]*) return ;;
-  esac
-  eval "${name}() { ${target} \"\$@\"; }"
-}
-_register_private_command "${LLAMA_SERVER_COMMAND:-}" llm-server-local
-_register_private_command "${MTPLX_SERVER_COMMAND:-}" _mtplx_server_local
-_register_private_command "${MLX_VLM_PRIMARY_COMMAND:-}" _mlx_vlm_primary_local
-_register_private_command "${MLX_VLM_SECONDARY_COMMAND:-}" _mlx_vlm_secondary_local
-
-unfunction _register_private_command
+# Remove retired launchers when this file is sourced in an existing shell.
+unfunction qwen-server qwenmlx-server qwen3.6-mlx prism-server \
+  llm-server-local _mtplx_server_local _mlx_vlm_primary_local \
+  _mlx_vlm_secondary_local _register_private_command 2>/dev/null || true
 
 # AWS credentials for Pi (amazon-bedrock provider)
 export AWS_PROFILE=default

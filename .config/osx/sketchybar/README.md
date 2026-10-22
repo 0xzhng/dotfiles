@@ -15,7 +15,7 @@ Reference clone: `~/.cache/sketchybar-reference-aejkatappaja`.
 - Codex shows only the lowest remaining percentage across available quota windows, refreshed every 120 seconds via CodexBar's OAuth CLI source. Failures show `--`, not a made-up zero.
 - Temperature is the actual average of this M5 Pro's CPU super/performance-core SMC sensors, read via Stats' bundled `smc list -t` every 10 seconds. It is not the legacy battery/load-based estimate. Stats.app must remain installed; failures show `--`.
 - Clicking Codex presses the running CodexBar application's actual status menu using Accessibility. It does not recreate the dropdown or launch CodexBar if closed.
-- CPU/GPU/RAM clicks press the corresponding original Stats status widget, identified by its Accessibility help text, not its changing numeric label or menu index. Stats must be running with that module's menu-bar widget enabled.
+- Temperature opens Stats’ original Sensors dropdown. CPU/GPU/RAM clicks press the corresponding original Stats status widget, identified by its Accessibility help text, not its changing numeric label or menu index. Stats must be running with that module's menu-bar widget enabled.
 - Battery icon and percentage follow the **active power source's energy mode**, not its charge level: Low Power yellow (`#fabd2f`), Automatic white (`#ffffff`), High Power green (`#b8bb26`). Mode is read from `pmset` every 5 seconds; no power settings are modified.
 
 ## Run / check

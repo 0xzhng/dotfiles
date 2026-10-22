@@ -6,6 +6,7 @@ local temperature = sbar.add("item", "widgets.temperature", {
   label = { string = "--", color = colors.white, padding_left = 8, padding_right = 8 },
   background = { drawing = false, border_width = 0 },
   padding_left = 1, padding_right = 1,
+  click_script = 'osascript "$CONFIG_DIR/plugins/stats_menu.applescript" Sensors',
 })
 sbar.add("item", { position = "left", width = settings.group_paddings })
 
