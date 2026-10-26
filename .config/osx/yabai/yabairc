@@ -39,6 +39,13 @@ yabai -m config mouse_drop_action swap
 # ── External Bar ────────────────────────────────────────────
 yabai -m config external_bar off:0:0
 
+# Per-monitor bar clearance; retain the laptop's default top padding.
+$HOME/.config/yabai/scripts/external_bar_gap.sh
+for event in display_added display_removed display_moved space_created space_changed; do
+    yabai -m signal --add label="external_bar_gap_$event" event="$event" \
+        action="$HOME/.config/yabai/scripts/external_bar_gap.sh"
+done
+
 # ── Workspace Setup ─────────────────────────────────────────
 TARGET_SPACES=7
 CURRENT=$(yabai -m query --spaces 2>/dev/null | jq 'length' 2>/dev/null || echo 0)

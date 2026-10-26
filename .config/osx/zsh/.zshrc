@@ -62,7 +62,7 @@ qwen3.8-GGUF() {
     --host 0.0.0.0 \
     --port 8080 \
     --api-key-file "$api_key_file" \
-    --ctx-size 32768 \
+    --ctx-size 0 \
     --n-gpu-layers 99 \
     --flash-attn on \
     --cache-type-k q8_0 \

@@ -24,9 +24,9 @@
       "baseUrl": "https://openrouter.ai/api/v1"
     },
     "llama-cpp": {
-      "baseUrl": "http://localhost:8080/v1",
+      "baseUrl": "http://127.0.0.1:8080/v1",
       "api": "openai-completions",
-      "apiKey": "$LOCAL_LLM_API_KEY",
+      "apiKey": "!cat /Users/oslen/.config/llama.cpp/api-key",
       "compat": {
         "thinkingFormat": "qwen-chat-template",
         "supportsDeveloperRole": false,
@@ -34,8 +34,8 @@
       },
       "models": [
         {
-          "id": "qwen3.8-27b-heretic-q4_k_m",
-          "name": "Qwen 3.8 27B Heretic Abliterated Uncensored (Q4_K_M)",
+          "id": "qwen3.8-27b-gguf",
+          "name": "Qwen3.8 27B OBLITERATED (Q8_0, local)",
           "reasoning": true,
           "input": [
             "text"
@@ -54,88 +54,6 @@
             "high": "xhigh",
             "xhigh": "xhigh",
             "max": null
-          }
-        }
-      ]
-    },
-    "mtplx": {
-      "baseUrl": "http://localhost:8089/v1",
-      "api": "openai-completions",
-      "apiKey": "$LOCAL_LLM_API_KEY",
-      "compat": {
-        "thinkingFormat": "qwen",
-        "supportsDeveloperRole": false,
-        "supportsReasoningEffort": true,
-        "maxTokensField": "max_tokens"
-      },
-      "models": [
-        {
-          "id": "qwen3.8-27b-mtplx-quality",
-          "name": "Qwen 3.8 27B MTPLX Optimized Quality",
-          "reasoning": true,
-          "input": [
-            "text",
-            "image"
-          ],
-          "maxTokens": 16384,
-          "contextWindow": 262144,
-          "samplingParams": {
-            "temperature": 1.0,
-            "top_p": 0.95,
-            "top_k": 20
-          },
-          "thinkingLevelMap": {
-            "minimal": null,
-            "low": "low",
-            "medium": "medium",
-            "high": "high",
-            "xhigh": "xhigh",
-            "max": null
-          }
-        }
-      ]
-    },
-    "mlx-vlm": {
-      "baseUrl": "http://localhost:8089/v1",
-      "api": "openai-completions",
-      "apiKey": "local",
-      "compat": {
-        "thinkingFormat": "qwen",
-        "supportsDeveloperRole": false,
-        "supportsReasoningEffort": false,
-        "maxTokensField": "max_tokens"
-      },
-      "models": [
-        {
-          "id": "Youssofal/Qwen3.6-35B-A3B-Abliterated-Heretic-MLX-4bit",
-          "name": "Qwen3.6 35B-A3B MoE Heretic Abliterated (MLX 4-bit)",
-          "reasoning": true,
-          "input": [
-            "text",
-            "image"
-          ],
-          "maxTokens": 16384,
-          "contextWindow": 262144,
-          "samplingParams": {
-            "temperature": 1.0,
-            "top_p": 0.95,
-            "top_k": 20
-          }
-        },
-        {
-          "id": "prism-ml/Ternary-Bonsai-27B-mlx-2bit",
-          "name": "Prism Ternary Bonsai 27B (MLX 2-bit)",
-          "reasoning": true,
-          "input": [
-            "text",
-            "image"
-          ],
-          "maxTokens": 16384,
-          "contextWindow": 262144,
-          "samplingParams": {
-            "temperature": 0.7,
-            "top_p": 0.95,
-            "top_k": 20
           }
         }
       ]
@@ -161,7 +79,10 @@
       "modelOverrides": {
         "z-ai/glm-5.2": {
           "contextWindow": 1000000,
-          "input": ["text", "image"]
+          "input": [
+            "text",
+            "image"
+          ]
         }
       }
     }
