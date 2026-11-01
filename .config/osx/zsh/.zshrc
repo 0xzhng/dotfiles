@@ -200,3 +200,4 @@ cloak() {
     "$URL"
 }
 setopt extended_glob
+source <(fzf --zsh)

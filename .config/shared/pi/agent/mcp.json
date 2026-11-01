@@ -233,7 +233,7 @@
         "/Users/oslen/mcp/scripts/bridges/firecrawl.sh"
       ],
       "env": {
-        "FIRECRAWL_API_URL": "http://127.0.0.1:3002"
+        "FIRECRAWL_API_URL": "http://127.0.0.1:3030"
       },
       "timeout": 120,
       "cwd": "~/mcp/server/firecrawl"
