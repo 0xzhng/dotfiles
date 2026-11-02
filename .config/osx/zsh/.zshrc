@@ -3,8 +3,9 @@ export PATH="$(brew --prefix)/opt/openjdk@21/bin:$PATH"
 export JAVA_HOME=$(/usr/libexec/java_home -v 21)
 
 export CLICOLOR=1
-alias ls='ls -G'
-alias ll='ls -lahG'
+alias ls='eza --icons=always --git'
+alias ll='ls -lah'
+alias tree='eza --tree --icons=always --git'
 alias mcp-reactbits='mcp reactbits'
 alias mcp-kill-reactbits='mcp-kill reactbits'
 alias gcc='gcc-16'
@@ -201,3 +202,4 @@ cloak() {
 }
 setopt extended_glob
 source <(fzf --zsh)
+bindkey '^R' fzf-history-widget
