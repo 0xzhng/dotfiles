@@ -3,9 +3,9 @@
 Adapted from https://github.com/Aejkatappaja/dotfiles (SketchyBar Lua config, WTFPL).
 Reference clone: `~/.cache/sketchybar-reference-aejkatappaja`.
 
-- Left: native Apple menu logo, occupied spaces/app icons, then OpenAI logo + Codex quota percentage, Waller’s icon while running, and text-only CPU temperature immediately after the last visible tab. Empty spaces (including their borders/gaps) disappear and return when a window opens there. Workspace pills are display-only: clicking does nothing. No separate active-app name or Spaces/Mission Control indicator. All open-app icons, including Ghostty, remain visible inside their workspace pills.
+- Left: custom Apple menu logo, occupied spaces/app icons, then OpenAI logo + Codex quota percentage, Waller’s icon while running, and text-only CPU temperature immediately after the last visible tab. Empty spaces (including their borders/gaps) disappear and return when a window opens there. Workspace pills are display-only: clicking does nothing. No separate active-app name or Spaces/Mission Control indicator. All open-app icons, including Ghostty, remain visible inside their workspace pills.
 - Right: CPU/GPU utilization, allocated/free RAM, battery percentage, stacked Wi-Fi upload/download speeds (no symbol or arrows), stock-style date/time.
-- The Apple logo opens macOS's original Apple menu via its menu-bar owner, including About This Mac, System Settings, Sleep, Restart, and Shut Down. No replacement power-action menu is used.
+- The Apple logo toggles a SketchyBar popup without opening the native menu bar: About This Mac, System Settings, Lock Screen, Sleep, Restart, and Shut Down. Restart/Shut Down require confirmation (Cancel is the default). The popup closes on a second click, leaving the bar/popup, changing apps, or selecting an action. Lock Screen uses Control-Command-Q through System Events and requires Accessibility permission for the SketchyBar launcher.
 - Volume, music, and notification widgets are not loaded. Apple, Codex, and temperature have no pill borders/backgrounds. CPU, GPU, RAM, and battery retain their rounded Gruvbox borders.
 - Waller appears beside Codex only while its process is running (checked every 3 seconds and on app switches). Clicking opens its original Live Wallpaper menu without launching it if closed.
 - Warm Gruvbox colors (cream/ochre/yellow/orange; no blue/pink): `colors.lua`. CPU/GPU/RAM use centered icons instead of text; GPU's naturally short glyph is scaled separately to balance the digits. Layout: `bar.lua`, `items/init.lua`, `items/widgets/init.lua`.
@@ -25,6 +25,7 @@ Requires SketchyBar, Lua 5.5, SF Pro, sketchybar-app-font, and SbarLua in `~/.lo
 ```sh
 sketchybar --reload
 cd ~/.config/sketchybar && lua tests/smoke.lua
+lua tests/apple.lua
 ```
 
 SketchyBar starts at GUI login and automatically relaunches if it exits, via the per-user `local.sketchybar` LaunchAgent (no sudo/Homebrew tap trust change).

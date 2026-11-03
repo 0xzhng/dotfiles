@@ -1,4 +1,4 @@
--- Apple opens the native macOS menu; the upstream helper is not needed.
+-- Apple uses a custom popup without opening the native menu bar.
 require("items.apple")
 require("items.spaces")
 require("items.widgets.codexbar")
