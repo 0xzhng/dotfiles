@@ -19,6 +19,12 @@
 !.config/shared/pi/agent/skills/add-mcp-instructs/**
 !.config/shared/pi/agent/skills/applicationinsights-web-ts/
 !.config/shared/pi/agent/skills/applicationinsights-web-ts/**
+!.config/shared/pi/agent/skills/awwwards-3d/
+!.config/shared/pi/agent/skills/awwwards-3d/**
+!.config/shared/pi/agent/skills/awwwards-animations/
+!.config/shared/pi/agent/skills/awwwards-animations/**
+!.config/shared/pi/agent/skills/awwwards-motion/
+!.config/shared/pi/agent/skills/awwwards-motion/**
 !.config/shared/pi/agent/skills/continual-learning/
 !.config/shared/pi/agent/skills/continual-learning/**
 !.config/shared/pi/agent/skills/find-skills/
@@ -29,6 +35,10 @@
 !.config/shared/pi/agent/skills/frontend-design/**
 !.config/shared/pi/agent/skills/frontend-design-review/
 !.config/shared/pi/agent/skills/frontend-design-review/**
+!.config/shared/pi/agent/skills/gsap-scrolltrigger/
+!.config/shared/pi/agent/skills/gsap-scrolltrigger/**
+!.config/shared/pi/agent/skills/high-end-visual-design/
+!.config/shared/pi/agent/skills/high-end-visual-design/**
 !.config/shared/pi/agent/skills/kami/
 !.config/shared/pi/agent/skills/kami/**
 !.config/shared/pi/agent/skills/mcp-builder/
